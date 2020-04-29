@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,14 +15,19 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import retrofit2.Callback;
+
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductHolder> {
     private Context context;
     private List<Product> productList;
+    private List<Cart> cartList;
+    OnChangeQuantity onChangeQuantity;
 
-
-    public ProductAdapter(Context context, List<Product> productList) {
+    public ProductAdapter(Context context, List<Product> productList, List<Cart> cartList, OnChangeQuantity onChangeQuantity) {
         this.context = context;
         this.productList = productList;
+        this.cartList = cartList;
+        this.onChangeQuantity = onChangeQuantity;
     }
 
     @NonNull
@@ -36,6 +42,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         holder.tvProductPrice.setText(productList.get(position).getPrice());
         holder.tvProductName.setText(productList.get(position).getName());
         Glide.with(context).load(Constant.BASE_URL+productList.get(position).getImage()).into(holder.productImg);
+        for(int i=0;i<productList.size();i++){
+            Cart cart = new Cart(productList.get(position).getId(),0,productList.get(position).getPrice());
+            cartList.add(cart);
+        }
+        holder.tvQuantity.setText(cartList.get(position).getQuantity()+"");
+        holder.btnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChangeQuantity.onChangeUp(cartList.get(position),holder.tvQuantity);
+                onChangeQuantity.haveChange(true);
+            }
+        });
+        holder.btnDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChangeQuantity.onChangeDown(cartList.get(position),holder.tvQuantity);
+                onChangeQuantity.haveChange(true);
+            }
+        });
     }
 
     @Override
@@ -46,12 +71,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     public class ProductHolder extends RecyclerView.ViewHolder {
         ImageView productImg;
         TextView tvProductName, tvProductPrice;
+        Button btnUp,btnDown;
+        TextView tvQuantity;
 
         public ProductHolder(@NonNull View itemView) {
             super(itemView);
             productImg = itemView.findViewById(R.id.productImg);
             tvProductName = itemView.findViewById(R.id.productName);
             tvProductPrice = itemView.findViewById(R.id.productPrice);
+            btnDown=itemView.findViewById(R.id.btnDown);
+            btnUp=itemView.findViewById(R.id.btnUp);
+            tvQuantity=itemView.findViewById(R.id.tvQuantity);
         }
     }
 }

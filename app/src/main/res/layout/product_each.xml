@@ -12,7 +12,8 @@
         android:layout_height="100dp"
         android:layout_marginRight="24dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="16dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -47,19 +48,27 @@
             android:layout_height="30dp"
             android:text="-"
             android:textColor="#fff"
-            android:background="@drawable/button_round"/>
+            android:background="@drawable/button_round"
+            android:id="@+id/btnDown"/>
 
-        <EditText
+        <TextView
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:id="@+id/tvQuantity"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#E91E63"
+            android:gravity="center
+"/>
 
         <Button
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:text="+"
             android:textColor="#fff"
-            android:background="@drawable/button_round"/>
+            android:background="@drawable/button_round"
+            android:id="@+id/btnUp"/>
     </LinearLayout>
 
 </RelativeLayout>
