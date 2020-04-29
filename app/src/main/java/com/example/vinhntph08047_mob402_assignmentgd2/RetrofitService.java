@@ -15,4 +15,8 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("api/user/register")
     Call<RegisterResponse> registerUser(@Field("username") String username, @Field("password") String password);
+
+    @GET("api/product/getAllProducts")
+    Call<BaseProductResponse> getAllProduct();
+
 }
