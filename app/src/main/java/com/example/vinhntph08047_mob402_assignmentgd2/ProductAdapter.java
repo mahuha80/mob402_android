@@ -1,6 +1,7 @@
 package com.example.vinhntph08047_mob402_assignmentgd2;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,23 +42,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
         holder.tvProductPrice.setText(productList.get(position).getPrice());
         holder.tvProductName.setText(productList.get(position).getName());
-        Glide.with(context).load(Constant.BASE_URL+productList.get(position).getImage()).into(holder.productImg);
-        for(int i=0;i<productList.size();i++){
-            Cart cart = new Cart(productList.get(position).getId(),0,productList.get(position).getPrice());
-            cartList.add(cart);
-        }
-        holder.tvQuantity.setText(cartList.get(position).getQuantity()+"");
+        Glide.with(context).load(Constant.BASE_URL + productList.get(position).getImage()).into(holder.productImg);
+        holder.tvQuantity.setText(cartList.get(position).getQuantity() + "");
         holder.btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChangeQuantity.onChangeUp(cartList.get(position),holder.tvQuantity);
+                onChangeQuantity.onChangeUp(cartList.get(position), holder.tvQuantity);
                 onChangeQuantity.haveChange(true);
             }
         });
         holder.btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChangeQuantity.onChangeDown(cartList.get(position),holder.tvQuantity);
+                onChangeQuantity.onChangeDown(cartList.get(position), holder.tvQuantity);
                 onChangeQuantity.haveChange(true);
             }
         });
@@ -71,7 +68,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     public class ProductHolder extends RecyclerView.ViewHolder {
         ImageView productImg;
         TextView tvProductName, tvProductPrice;
-        Button btnUp,btnDown;
+        Button btnUp, btnDown;
         TextView tvQuantity;
 
         public ProductHolder(@NonNull View itemView) {
@@ -79,9 +76,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
             productImg = itemView.findViewById(R.id.productImg);
             tvProductName = itemView.findViewById(R.id.productName);
             tvProductPrice = itemView.findViewById(R.id.productPrice);
-            btnDown=itemView.findViewById(R.id.btnDown);
-            btnUp=itemView.findViewById(R.id.btnUp);
-            tvQuantity=itemView.findViewById(R.id.tvQuantity);
+            btnDown = itemView.findViewById(R.id.btnDown);
+            btnUp = itemView.findViewById(R.id.btnUp);
+            tvQuantity = itemView.findViewById(R.id.tvQuantity);
         }
     }
 }

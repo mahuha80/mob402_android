@@ -2,21 +2,30 @@ package com.example.vinhntph08047_mob402_assignmentgd2;
 
 import androidx.annotation.NonNull;
 
-public class Cart {
-    private String productId;
-    private int quantity;
-    private String price;
+import com.google.gson.annotations.SerializedName;
 
-    public Cart(String productId, int quantity, String price) {
-        this.productId = productId;
-        this.quantity = quantity;
-        this.price = price;
-    }
+public class CartResponse {
+    @SerializedName("_id")
+    private String Id;
+    @SerializedName("productId")
+    private String productId;
+    @SerializedName("quantity")
+    private String quantity;
+    @SerializedName("price")
+    private String price;
 
     @NonNull
     @Override
     public String toString() {
-        return "productId " + productId +"quantity "+quantity+"price"+price;
+        return Id + "-" + "-" + productId + "-" + quantity + "-" + price;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 
     public String getProductId() {
@@ -27,11 +36,11 @@ public class Cart {
         this.productId = productId;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
@@ -43,4 +52,3 @@ public class Cart {
         this.price = price;
     }
 }
-

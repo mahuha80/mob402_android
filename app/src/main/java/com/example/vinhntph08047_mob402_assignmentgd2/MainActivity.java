@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse loginResponse = response.body();
                 if ( response.code()==200) {
-                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                    Constant.userId=loginResponse.getUserId();
+                    Intent intent =new Intent(MainActivity.this, HomeActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Sai tên tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                 }
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Sai tên tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Vui lòng kiểm tra lại đường truyền mạng", Toast.LENGTH_SHORT).show();
 
             }
         });

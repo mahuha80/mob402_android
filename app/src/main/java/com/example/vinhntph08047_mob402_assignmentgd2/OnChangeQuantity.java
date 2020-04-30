@@ -7,5 +7,6 @@ public interface OnChangeQuantity {
     void onChangeUp(Cart cart, TextView view);
     void onChangeDown(Cart cart, TextView view);
     void haveChange(Boolean show);
+    void notifyItemRemove(int position);
 
 }
