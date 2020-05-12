@@ -1,4 +1,4 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.api;
 
 import androidx.annotation.NonNull;
 

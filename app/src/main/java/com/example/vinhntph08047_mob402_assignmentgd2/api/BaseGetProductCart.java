@@ -1,7 +1,6 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.api;
 
-import androidx.annotation.NonNull;
-
+import com.example.vinhntph08047_mob402_assignmentgd2.api.CartResponse;
 import com.google.gson.annotations.SerializedName;
 
 public class BaseGetProductCart {

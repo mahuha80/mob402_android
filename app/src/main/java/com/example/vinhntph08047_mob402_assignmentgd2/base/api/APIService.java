@@ -1,6 +1,11 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.base.api;
 
-import java.lang.reflect.Array;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.BaseProductResponse;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.model.Cart;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.LoginResponse;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.RegisterResponse;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.Root;
+
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -10,7 +15,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public interface RetrofitService {
+public interface APIService {
     @FormUrlEncoded
     @POST("api/user/login")
     Call<LoginResponse> loginUser(@Field("username") String username, @Field("password") String password);

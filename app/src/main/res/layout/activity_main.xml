@@ -7,7 +7,7 @@
     android:layout_margin="16dp"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".module.main.MainActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:id="@+id/edUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:text="admin" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:inputType="textPassword"
-            android:text=""/>
+            android:text="admin" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout

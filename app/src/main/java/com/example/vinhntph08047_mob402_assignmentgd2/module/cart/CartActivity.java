@@ -1,23 +1,31 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.module.cart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.vinhntph08047_mob402_assignmentgd2.R;
+import com.example.vinhntph08047_mob402_assignmentgd2.adapter.CartAdapter;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.BaseGetProductCart;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.CartResponse;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.Root;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.api.APIService;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.api.ApiModule;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.constants.APIConstant;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.listener.OnChangeQuantityListener;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.model.Cart;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartActivity extends AppCompatActivity implements OnChangeQuantity {
+public class CartActivity extends AppCompatActivity implements OnChangeQuantityListener {
     List<CartResponse> list;
     RecyclerView recyclerView;
     CartAdapter cartAdapter;
@@ -30,8 +38,8 @@ public class CartActivity extends AppCompatActivity implements OnChangeQuantity 
         list = new ArrayList<>();
         recyclerView = findViewById(R.id.rv);
         tvTongTien=findViewById(R.id.tvTongTien);
-        RetrofitService retrofitService = APIClient.getInstance().create(RetrofitService.class);
-        retrofitService.getAllProductCartById(Constant.userId).enqueue(new Callback<Root>() {
+        APIService APIService = ApiModule.getInstance().create(APIService.class);
+        APIService.getAllProductCartById(APIConstant.userId).enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
                 if (response.code() == 200) {
@@ -48,10 +56,6 @@ public class CartActivity extends AppCompatActivity implements OnChangeQuantity 
                     recyclerView.setAdapter(cartAdapter);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     getTongTien();
-
-
-                    //                list = Arrays.asList(baseGetProductCart.getItems());
-//                Toast.makeText(CartActivity.this, "OK", Toast.LENGTH_SHORT).show();
                 }
 
             }

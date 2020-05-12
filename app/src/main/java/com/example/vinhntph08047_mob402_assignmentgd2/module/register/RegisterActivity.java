@@ -1,4 +1,4 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.module.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.vinhntph08047_mob402_assignmentgd2.R;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.RegisterResponse;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.api.APIService;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.api.ApiModule;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,8 +55,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         } else {
             Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
-            RetrofitService retrofitService = APIClient.getInstance().create(RetrofitService.class);
-            retrofitService.registerUser(username, password).enqueue(new Callback<RegisterResponse>() {
+            APIService APIService = ApiModule.getInstance().create(APIService.class);
+            APIService.registerUser(username, password).enqueue(new Callback<RegisterResponse>() {
                 @Override
                 public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                     RegisterResponse registerResponse = response.body();

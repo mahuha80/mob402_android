@@ -1,4 +1,4 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,17 +10,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vinhntph08047_mob402_assignmentgd2.R;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.CartResponse;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.listener.OnChangeQuantityListener;
+
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
     Context context;
     List<CartResponse> cartResponseList;
-    OnChangeQuantity onChangeQuantity;
+    OnChangeQuantityListener onChangeQuantityListener;
 
-    public CartAdapter(Context context, List<CartResponse> cartResponseList, OnChangeQuantity onChangeQuantity) {
+    public CartAdapter(Context context, List<CartResponse> cartResponseList, OnChangeQuantityListener onChangeQuantityListener) {
         this.context = context;
         this.cartResponseList = cartResponseList;
-        this.onChangeQuantity = onChangeQuantity;
+        this.onChangeQuantityListener = onChangeQuantityListener;
     }
 
     @NonNull
@@ -34,23 +38,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
     public void onBindViewHolder(@NonNull CartHolder holder, int position) {
         holder.tvQuantity.setText("Số lượng " + cartResponseList.get(position).getQuantity() + "");
         holder.tvPrice.setText("Giá " + cartResponseList.get(position).getPrice() + "");
-        switch (cartResponseList.get(position).getProductId()) {
-            case "5e9ffe3ee15eb81d08745cbb":
-                holder.tvProductId.setText("Tên sản phẩm: Iphone 3");
-                break;
-            case "5ea79bb03d59a8144061324e":
-                holder.tvProductId.setText("Tên sản phẩm: Iphone 4");
-                break;
-            default:
-                holder.tvProductId.setText("Tên sản phẩm: Iphone 5");
-                break;
-        }
+        holder.tvProductId.setText(cartResponseList.get(position).getId());
         int thanhTien = Integer.parseInt(cartResponseList.get(position).getPrice()) * Integer.parseInt(cartResponseList.get(position).getQuantity());
         holder.tvThanhTien.setText("Thành tiền " + thanhTien);
         holder.btnRm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChangeQuantity.notifyItemRemove(position);
+                onChangeQuantityListener.notifyItemRemove(position);
             }
         });
 

@@ -1,7 +1,6 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.vinhntph08047_mob402_assignmentgd2.R;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.Product;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.listener.OnChangeQuantityListener;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.model.Cart;
 
 import java.util.List;
-
-import retrofit2.Callback;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductHolder> {
     private Context context;
     private List<Product> productList;
     private List<Cart> cartList;
-    OnChangeQuantity onChangeQuantity;
+    OnChangeQuantityListener onChangeQuantityListener;
 
-    public ProductAdapter(Context context, List<Product> productList, List<Cart> cartList, OnChangeQuantity onChangeQuantity) {
+    public ProductAdapter(Context context, List<Product> productList, List<Cart> cartList, OnChangeQuantityListener onChangeQuantityListener) {
         this.context = context;
         this.productList = productList;
         this.cartList = cartList;
-        this.onChangeQuantity = onChangeQuantity;
+        this.onChangeQuantityListener = onChangeQuantityListener;
     }
 
     @NonNull
@@ -42,20 +43,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
         holder.tvProductPrice.setText(productList.get(position).getPrice());
         holder.tvProductName.setText(productList.get(position).getName());
-        Glide.with(context).load(Constant.BASE_URL + productList.get(position).getImage()).into(holder.productImg);
+        Glide.with(context).load( productList.get(position).getImage()).into(holder.productImg);
         holder.tvQuantity.setText(cartList.get(position).getQuantity() + "");
         holder.btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChangeQuantity.onChangeUp(cartList.get(position), holder.tvQuantity);
-                onChangeQuantity.haveChange(true);
+                onChangeQuantityListener.onChangeUp(cartList.get(position), holder.tvQuantity);
+                onChangeQuantityListener.haveChange(true);
             }
         });
         holder.btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChangeQuantity.onChangeDown(cartList.get(position), holder.tvQuantity);
-                onChangeQuantity.haveChange(true);
+                onChangeQuantityListener.onChangeDown(cartList.get(position), holder.tvQuantity);
+                onChangeQuantityListener.haveChange(true);
             }
         });
     }

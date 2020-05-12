@@ -1,4 +1,4 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.module.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,12 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.vinhntph08047_mob402_assignmentgd2.R;
+import com.example.vinhntph08047_mob402_assignmentgd2.adapter.ProductAdapter;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.BaseProductResponse;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.Product;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.api.APIService;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.api.ApiModule;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.constants.APIConstant;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.listener.OnChangeQuantityListener;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.model.Cart;
+import com.example.vinhntph08047_mob402_assignmentgd2.module.cart.CartActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +32,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity implements OnChangeQuantity {
+public class HomeActivity extends AppCompatActivity implements OnChangeQuantityListener {
     List<Product> productList = new ArrayList<>();
     RecyclerView rv;
     ProductAdapter productAdapter;
     List<Cart> cartList = new ArrayList<>();
     Button btnThanhToan;
-    RetrofitService retrofitService;
+    com.example.vinhntph08047_mob402_assignmentgd2.base.api.APIService APIService;
     String userId = "";
 
     @Override
@@ -38,8 +48,8 @@ public class HomeActivity extends AppCompatActivity implements OnChangeQuantity 
         rv = findViewById(R.id.rv);
         btnThanhToan = findViewById(R.id.btnThanhToan);
         btnThanhToan.setVisibility(View.INVISIBLE);
-        retrofitService = APIClient.getInstance().create(RetrofitService.class);
-        retrofitService.getAllProduct().enqueue(new Callback<BaseProductResponse>() {
+        APIService = ApiModule.getInstance().create(APIService.class);
+        APIService.getAllProduct().enqueue(new Callback<BaseProductResponse>() {
             @Override
             public void onResponse(Call<BaseProductResponse> call, Response<BaseProductResponse> response) {
                 BaseProductResponse baseProductResponse = response.body();
@@ -98,12 +108,12 @@ public class HomeActivity extends AppCompatActivity implements OnChangeQuantity 
             btnThanhToan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    retrofitService.postProductToCart(Constant.userId,cartList).enqueue(new Callback<ResponseBody>() {
+                    APIService.postProductToCart(APIConstant.userId,cartList).enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if(response.code()==200){
                                 Toast.makeText(HomeActivity.this, "Upload lên server thành công", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(HomeActivity.this,CartActivity.class);
+                                Intent intent=new Intent(HomeActivity.this, CartActivity.class);
                                 startActivity(intent);
                             }
                         }

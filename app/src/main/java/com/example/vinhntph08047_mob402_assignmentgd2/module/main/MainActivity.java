@@ -1,14 +1,21 @@
-package com.example.vinhntph08047_mob402_assignmentgd2;
+package com.example.vinhntph08047_mob402_assignmentgd2.module.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.vinhntph08047_mob402_assignmentgd2.R;
+import com.example.vinhntph08047_mob402_assignmentgd2.api.LoginResponse;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.api.APIService;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.api.ApiModule;
+import com.example.vinhntph08047_mob402_assignmentgd2.base.constants.APIConstant;
+import com.example.vinhntph08047_mob402_assignmentgd2.module.register.RegisterActivity;
+import com.example.vinhntph08047_mob402_assignmentgd2.module.home.HomeActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,14 +35,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void signIn() {
         String username = edUsername.getText().toString();
         String password = edPassword.getText().toString();
-        RetrofitService retrofitService = APIClient.getInstance().create(RetrofitService.class);
-        retrofitService.loginUser(username, password).enqueue(new Callback<LoginResponse>() {
+        APIService APIService = ApiModule.getInstance().create(APIService.class);
+        APIService.loginUser(username, password).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse loginResponse = response.body();
-                if ( response.code()==200) {
-                    Constant.userId=loginResponse.getUserId();
-                    Intent intent =new Intent(MainActivity.this, HomeActivity.class);
+                Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+                if (response.code() == 200) {
+                    APIConstant.userId = loginResponse.getUserId();
+                    APIConstant.TOKEN = loginResponse.getToken();
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Sai tên tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
@@ -44,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Vui lòng kiểm tra lại đường truyền mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, call.toString()+"\n"+ t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
             }
         });
