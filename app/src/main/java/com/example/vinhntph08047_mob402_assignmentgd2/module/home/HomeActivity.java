@@ -61,6 +61,21 @@ public class HomeActivity extends AppCompatActivity implements OnChangeQuantityL
                 productAdapter = new ProductAdapter(HomeActivity.this, productList, cartList, HomeActivity.this);
                 rv.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
                 rv.setAdapter(productAdapter);
+                rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                        Toast.makeText(HomeActivity.this, "hi", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+                        Toast.makeText(HomeActivity.this, "hi", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
 
             @Override
